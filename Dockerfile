@@ -3,8 +3,8 @@ FROM ubuntu:20.04
 LABEL maintainer="Mbogol Touye Achille"  \
       email="touyejunior@gmail.com" \
       description="Dockerfile for Hadoop and Spark with Jupyter Notebook" \
-      version="1.0.0"
-      description="This Dockerfile sets up a Hadoop and Spark environment in a single-node installation with Jupyter Notebook for data processing and analysis."
+      version="1.0.0" \
+      description="This Dockerfile sets up a Hadoop environment in a single-node installation with spark and Jupyter Notebook for data processing and analysis."
 
 WORKDIR /root
 
@@ -58,6 +58,7 @@ RUN mkdir -p ~/hdfs/namenode ~/hdfs/datanode && \
 
 # 8. Copy configuration files
 COPY config/* /tmp/
+
 RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/hadoop/hadoop-env.sh $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
     mv /tmp/hadoop/hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml && \
