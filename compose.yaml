@@ -1,0 +1,36 @@
+name: hadoop-docker-single-node with jupyter and spark
+version: '3'
+
+services:
+  hadoop-single-node:    
+    build: .             # Build the Dockerfile in the current directory 
+    ports:
+      - 9870:9870        # HDFS NameNode UI 
+      - 8088:8088        # YARN ResourceManager UI
+      - 8080:8080        # Spark Master UI 
+      - 19888:19888      # YARN Job History Server       
+      - 7077:7077        # Spark Master UI
+      - 8888:8888        # Jupyter Notebook
+    environment:
+      - HADOOP_HOME=/usr/local/hadoop
+      - SPARK_HOME=/usr/local/spark
+      - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+      - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop  
+      - PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin
+      - LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
+    
+    container_name: hadoop-single-node
+    hostname: hadoop-single-node
+    stdin_open: true
+    tty: true
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 1024
+    volumes:
+      - notebooks:/root/notebooks
+    command: sh -c "service ssh start && bash"
+
+volumes:
+  notebooks:
+  
