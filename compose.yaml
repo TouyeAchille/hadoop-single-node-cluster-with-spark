@@ -1,6 +1,4 @@
-name: hadoop-docker-single-node with jupyter and spark
-version: '3'
-
+name: hadoop-single-node-with-jupyter-spark
 services:
   hadoop-single-node:    
     build: .             # Build the Dockerfile in the current directory 
@@ -31,5 +29,6 @@ services:
     command: sh -c "service ssh start && bash"
 
 volumes:
+  # Define a volume for Jupyter notebooks
   notebooks:
   

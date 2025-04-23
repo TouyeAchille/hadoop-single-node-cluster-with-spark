@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:latest
 
 LABEL maintainer="Mbogol Touye Achille"  \
       email="touyejunior@gmail.com" \
@@ -16,7 +16,7 @@ ARG SPARK_VERSION=3.5.5
 # 1. Install dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    openssh-server openjdk-8-jdk wget vim curl ssh pdsh \
+    openssh-server openjdk-8-jdk wget vim ssh \
     python3 python3-pip && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -32,9 +32,9 @@ RUN wget https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VER
     mv spark-${SPARK_VERSION}-bin-hadoop3 /usr/local/spark && \
     rm spark-${SPARK_VERSION}-bin-hadoop3.tgz
 
+
 # 4. Python, pip, Jupyter, PySpark
-RUN pip3 install --upgrade pip && \
-    pip3 install pyspark jupyter findspark
+RUN pip3 install pyspark jupyter findspark --break-system-packages
 
 # 5. ENV vars
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
@@ -45,8 +45,30 @@ ENV HADOOP_HDFS_HOME=$HADOOP_HOME
 ENV HADOOP_YARN_HOME=$HADOOP_HOME
 ENV SPARK_HOME=/usr/local/spark
 ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin
+ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin:$SPARK_HOME/sbin
 ENV LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
+
+# 5 bis. Append ENV vars to /root/.bashrc for interactive shells
+RUN echo "\
+    export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64\n\
+    export HADOOP_HOME=/usr/local/hadoop\n\
+    export HADOOP_MAPRED_HOME=\$HADOOP_HOME\n\
+    export HADOOP_COMMON_HOME=\$HADOOP_HOME\n\
+    export HADOOP_HDFS_HOME=\$HADOOP_HOME\n\
+    export HADOOP_YARN_HOME=\$HADOOP_HOME\n\
+    export SPARK_HOME=/usr/local/spark\n\
+    export HADOOP_CONF_DIR=\$HADOOP_HOME/etc/hadoop\n\
+    export PATH=\$PATH:\$HADOOP_HOME/bin:\$HADOOP_HOME/sbin:\$SPARK_HOME/bin:\$SPARK_HOME/sbin\n\
+    export LD_LIBRARY_PATH=\$HADOOP_HOME/lib/native:\$LD_LIBRARY_PATH\n\
+    " >> /root/.bashrc
+
+RUN echo "\
+    export HDFS_NAMENODE_USER=root\n\
+    export HDFS_DATANODE_USER=root\n\
+    export HDFS_SECONDARYNAMENODE_USER=root\n\
+    export YARN_RESOURCEMANAGER_USER=root\n\
+    export YARN_NODEMANAGER_USER=root" > /etc/profile.d/hadoop.sh
+
 
 # 6. SSH without key
 RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
@@ -59,6 +81,9 @@ RUN mkdir -p ~/hdfs/namenode ~/hdfs/datanode && \
 # 8. Copy configuration files
 COPY config/ /tmp/
 COPY scripts/ /tmp/scripts/
+
+# copy dataset
+COPY dataset/purchases.txt.gz /root/dataset/purchases.txt.gz
 
 
 RUN mv /tmp/ssh_config ~/.ssh/config && \
@@ -78,6 +103,7 @@ RUN chmod +x ~/start-hadoop.sh ~/run-wordcount.sh && \
 
 # 10. Format HDFS
 RUN $HADOOP_HOME/bin/hdfs namenode -format
+
 
 
 # 12. Exécution du conteneur
