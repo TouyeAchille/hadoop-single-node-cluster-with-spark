@@ -1,8 +1,5 @@
 # Hadoop Single Node Setup with Docker
-
 This project sets up a Hadoop environment in a Docker container. It also includes a Spark and Jupyter Notebook installation for data processing and analysis. Follow the instructions below to build and run the Hadoop cluster in a single-node Docker container.
-
----
 
 ## 🛠️ 1. Build Image and Create Hadoop Container
 
