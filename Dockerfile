@@ -57,7 +57,7 @@ RUN mkdir -p ~/hdfs/namenode ~/hdfs/datanode && \
     mkdir -p $HADOOP_HOME/logs
 
 # 8. Copy configuration files
-COPY config/* /tmp/
+COPY config/ /tmp/
 
 RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/hadoop/hadoop-env.sh $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
