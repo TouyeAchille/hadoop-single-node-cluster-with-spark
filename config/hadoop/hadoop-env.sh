@@ -87,7 +87,7 @@ export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
 
 # Enable extra debugging of Hadoop's JAAS binding, used to set up
 # Kerberos security.
-export HADOOP_JAAS_DEBUG=true
+#export HADOOP_JAAS_DEBUG=true
 
 # Extra Java runtime options for all Hadoop commands. We don't support
 # IPv6 yet/still, so by default the preference is set to IPv4.
@@ -98,7 +98,7 @@ export HADOOP_OPTS="$HADOOP_OPTS -Djava.net.preferIPv4Stack=true -Dsun.security.
 # Some parts of the shell code may do special things dependent upon
 # the operating system.  We have to set this here. See the next
 # section as to why....
-export HADOOP_OS_TYPE=${HADOOP_OS_TYPE:-$(uname -s)}
+#export HADOOP_OS_TYPE=${HADOOP_OS_TYPE:-$(uname -s)}
 
 # Extra Java runtime options for some Hadoop commands
 # and clients (i.e., hdfs dfs -blah).  These get appended to HADOOP_OPTS for
@@ -177,7 +177,7 @@ export HADOOP_CLIENT_CLASSLOADER_SYSTEM_CLASSES="-org.apache.hadoop.UserClass,ja
 
 # Options to pass to SSH when one of the "log into a host and
 # start/stop daemons" scripts is executed
-export HADOOP_SSH_OPTS="-o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=10s"
+#export HADOOP_SSH_OPTS="-o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=10s"
 
 # The built-in ssh handler will limit itself to 10 simultaneous connections.
 # For pdsh users, this sets the fanout size ( -f )
@@ -186,7 +186,7 @@ export HADOOP_SSH_OPTS="-o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectT
 
 # Filename which contains all of the hosts for any remote execution
 # helper scripts # such as workers.sh, start-dfs.sh, etc.
-export HADOOP_WORKERS="${HADOOP_CONF_DIR}/workers"
+#export HADOOP_WORKERS="${HADOOP_CONF_DIR}/workers"
 
 ###
 # Options for all daemons
@@ -240,7 +240,7 @@ export HADOOP_SECURITY_LOGGER=INFO,NullAppender
 
 # Default name for the service level authorization file
 # Java property: hadoop.policy.file
-# export HADOOP_POLICYFILE="hadoop-policy.xml"
+export HADOOP_POLICYFILE="${HADOOP_CONF_DIR}/hadoop-policy.xml"
 
 #
 # NOTE: this is not used by default!  <-----
@@ -299,7 +299,7 @@ export HDFS_AUDIT_LOGGER=INFO,NullAppender
 # and therefore may override any similar flags set in HADOOP_OPTS
 #
 # a) Set JMX options
-# export HDFS_NAMENODE_OPTS="-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=1026"
+export HDFS_NAMENODE_OPTS="-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=1026"
 #
 # b) Set garbage collection logs
 # export HDFS_NAMENODE_OPTS="${HADOOP_GC_SETTINGS} -Xloggc:${HADOOP_LOG_DIR}/gc-rm.log-$(date +'%Y%m%d%H%M')"
@@ -308,7 +308,7 @@ export HDFS_AUDIT_LOGGER=INFO,NullAppender
 # export HDFS_NAMENODE_OPTS="-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -Xloggc:${HADOOP_LOG_DIR}/gc-rm.log-$(date +'%Y%m%d%H%M')"
 
 # this is the default:
-export HDFS_NAMENODE_OPTS="-Dhadoop.security.logger=INFO,RFAS -Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,NullAppender} $HADOOP_NAMENODE_OPTS"    
+#export HDFS_NAMENODE_OPTS="-Dhadoop.security.logger=INFO,RFAS -Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,NullAppender} $HADOOP_NAMENODE_OPTS"    
 
 
 
@@ -338,7 +338,7 @@ export HDFS_DATANODE_OPTS="-Dhadoop.security.logger=ERROR,RFAS $HDFS_DATANODE_OP
 # defined if SASL is configured for authentication of data transfer protocol
 # using non-privileged ports.
 # This will replace the hadoop.id.str Java property in secure mode.
-export HDFS_DATANODE_SECURE_USER=hdfs
+#export HDFS_DATANODE_SECURE_USER=hdfs
 
 # Supplemental options for secure datanodes
 # By default, Hadoop uses jsvc which needs to know to launch a
@@ -352,7 +352,7 @@ export HDFS_DATANODE_SECURE_USER=hdfs
 # These options will be appended to the options specified as HADOOP_OPTS
 # and therefore may override any similar flags set in HADOOP_OPTS
 #
-export HDFS_NFS3_OPTS="$HDFS_NFS3_OPTS"
+#export HDFS_NFS3_OPTS="$HDFS_NFS3_OPTS"
 
 # Specify the JVM options to be used when starting the Hadoop portmapper.
 # These options will be appended to the options specified as HADOOP_OPTS

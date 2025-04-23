@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <configuration>
     <property>
         <name>yarn.nodemanager.pmem-check-enabled</name>
@@ -13,11 +14,15 @@
         <value>mapreduce_shuffle</value>
     </property>
     <property>
+        <name>yarn.nodemanager.env-whitelist</name>
+        <value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_HOME,PATH,LANG,TZ,HADOOP_MAPRED_HOME</value>
+    </property>
+    <property>
         <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
         <value>org.apache.hadoop.mapred.ShuffleHandler</value>
     </property>
     <property>
         <name>yarn.resourcemanager.hostname</name>
-        <value>hadoop-master</value>
+        <value>hadoop-single-node</value>
     </property>
 </configuration>
