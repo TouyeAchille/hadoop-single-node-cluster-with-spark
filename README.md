@@ -1,1 +1,1 @@
-# hadoop-single-node-cluster-with-spark
+# hadoop-cluster-docker-with-spark
