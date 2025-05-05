@@ -75,6 +75,7 @@ ENV LANG=C.UTF-8 \
     PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin:/usr/local/spark/bin:/usr/local/spark/sbin    
 
 RUN echo "\
+    alias mapreduce='hadoop jar \$HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-${HADOOP_VERSION}.jar'\n\
     export JAVA_HOME=${JAVA_HOME}\n\
     export HADOOP_HOME=${HADOOP_HOME}\n\
     export SPARK_HOME=${SPARK_HOME}\n\
@@ -91,8 +92,8 @@ RUN echo "\
     export HDFS_NAMENODE_USER=root\n\
     export HDFS_DATANODE_USER=root\n\
     export HDFS_SECONDARYNAMENODE_USER=root\n\
-    export HADOOP_YARN_RESOURCEMANAGER_USER=root\n\
-    export HADOOP_YARN_NODEMANAGER_USER=root"  > /etc/profile.d/hadoop.sh
+    export YARN_RESOURCEMANAGER_USER=root\n\
+    export YARN_NODEMANAGER_USER=root"  > /etc/profile.d/hadoop.sh
 
 # -------------------------------------------------------------
 # SSH Configuration (passwordless)
