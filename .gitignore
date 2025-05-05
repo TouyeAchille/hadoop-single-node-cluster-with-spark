@@ -172,5 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+<<<<<<< HEAD
 notebooks/dataset/purchases.txt.gz
 notebooks/dataset/purchases.txt
+=======
+>>>>>>> d12d363e793a5991a40fa92dacb028f8ce044a5b

@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+=======
+<?xml version="1.0"?>
+>>>>>>> d12d363e793a5991a40fa92dacb028f8ce044a5b
 <configuration>
     <property>
         <name>dfs.namenode.name.dir</name>

@@ -20,6 +20,7 @@ Within the container's shell, execute the following command to start the Hadoop 
 📂 4. Unzip Dataset for Practical Work
 For the practical exercises, you will need to unzip the provided dataset file. Use the following command to unzip purchases.txt.gz:
 
+<<<<<<< HEAD
 gunzip notebooks/dataset/purchases.txt.gz
 
 ✅ 5. run Jupyter Notebook from shell of container, execute the following command : 
@@ -31,3 +32,6 @@ gunzip notebooks/dataset/purchases.txt.gz
  👉 "Access it from your browser (on your host machine) at http://localhost:8888 and paste the token displayed in the container terminal.
 
 
+=======
+gunzip dataset/purchases.txt.gz
+>>>>>>> d12d363e793a5991a40fa92dacb028f8ce044a5b
