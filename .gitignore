@@ -173,3 +173,4 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 notebooks/dataset/purchases.txt.gz
+notebooks/dataset/purchases.txt
