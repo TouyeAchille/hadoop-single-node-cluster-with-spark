@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 name: hadoop-spark 
 services:
   hadoop-single-node:
@@ -21,26 +21,6 @@ services:
       - HADOOP_YARN_HOME=$HADOOP_HOME 
       - HADOOP_TOOLS_HOME=$HADOOP_HOME 
       - HADOOP_COMMON_LIB_NATIVE_DIR=${HADOOP_HOME}/hadoop/lib/native
-=======
-name: hadoop-single-node-with-jupyter-spark
-services:
-  hadoop-single-node:    
-    build: .             # Build the Dockerfile in the current directory 
-    ports:
-      - 9870:9870        # HDFS NameNode UI 
-      - 8088:8088        # YARN ResourceManager UI
-      - 8080:8080        # Spark Master UI        
-      - 7077:7077        # Spark Master UI
-      - 8888:8888        # Jupyter Notebook
-    environment:
-      - HADOOP_HOME=/usr/local/hadoop
-      - SPARK_HOME=/usr/local/spark
-      - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-      - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop  
-      - PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin
-      - LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
-    
->>>>>>> d12d363e793a5991a40fa92dacb028f8ce044a5b
     container_name: hadoop-single-node
     hostname: hadoop-single-node
     stdin_open: true
@@ -51,17 +31,11 @@ services:
         hard: 1024
     volumes:
       - notebooks:/root/notebooks
-<<<<<<< HEAD
     command: >
       sh -c "service ssh start && bash"
 
-volumes:
-  notebooks:
-=======
-    command: sh -c "service ssh start && bash"
 
 volumes:
   # Define a volume for Jupyter notebooks
   notebooks:
-  
->>>>>>> d12d363e793a5991a40fa92dacb028f8ce044a5b
+
