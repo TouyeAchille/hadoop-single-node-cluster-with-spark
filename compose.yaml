@@ -1,21 +1,25 @@
-name: hadoop-single-node-with-jupyter-spark
+name: hadoop-spark 
 services:
-  hadoop-single-node:    
-    build: .             # Build the Dockerfile in the current directory 
+  hadoop-single-node:
+    build: .
     ports:
-      - 9870:9870        # HDFS NameNode UI 
-      - 8088:8088        # YARN ResourceManager UI
-      - 8080:8080        # Spark Master UI        
-      - 7077:7077        # Spark Master UI
-      - 8888:8888        # Jupyter Notebook
+      - 9870:9870       # HDFS NameNode UI
+      - 8088:8088       # YARN ResourceManager UI
+      - 8080:8080       # Spark Master UI
+      - 7077:7077       # Spark Master Port
+      - 8888:8888       # Jupyter Notebook  
     environment:
       - HADOOP_HOME=/usr/local/hadoop
       - SPARK_HOME=/usr/local/spark
-      - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-      - HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop  
-      - PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin
-      - LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
-    
+      - JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+      - HADOOP_CONF_DIR=${HADOOP_HOME}/hadoop/etc/hadoop
+      - PATH=${HADOOP_HOME}/hadoop/bin:${HADOOP_HOME}/hadoop/sbin:${SPARK_HOME}/spark/bin:${SPARK_HOME}/spark/sbin:$PATH
+      - HADOOP_MAPRED_HOME=$HADOOP_HOME 
+      - HADOOP_COMMON_HOME=$HADOOP_HOME 
+      - HADOOP_HDFS_HOME=$HADOOP_HOME
+      - HADOOP_YARN_HOME=$HADOOP_HOME 
+      - HADOOP_TOOLS_HOME=$HADOOP_HOME 
+      - HADOOP_COMMON_LIB_NATIVE_DIR=${HADOOP_HOME}/hadoop/lib/native
     container_name: hadoop-single-node
     hostname: hadoop-single-node
     stdin_open: true
@@ -26,9 +30,8 @@ services:
         hard: 1024
     volumes:
       - notebooks:/root/notebooks
-    command: sh -c "service ssh start && bash"
+    command: >
+      sh -c "service ssh start && bash"
 
 volumes:
-  # Define a volume for Jupyter notebooks
   notebooks:
-  
