@@ -20,5 +20,5 @@ echo -e "\n"
 #yarn --daemon stop resourcemanager
 #yarn --daemon stop nodemanager
 
-#echo "✅ Hadoop services stopped:"
+#echo "Hadoop services stopped:"
 jps

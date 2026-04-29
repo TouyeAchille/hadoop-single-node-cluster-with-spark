@@ -11,14 +11,14 @@ $HADOOP_HOME/sbin/start-yarn.sh
 echo -e "\n"
 
 
-#echo "🚀 Starting HDFS daemons..."
+#echo "Starting HDFS daemons..."
 #hdfs --daemon start namenode
 #hdfs --daemon start datanode
 #hdfs --daemon start secondarynamenode
 
-#echo "🚀 Starting YARN daemons..."
+#echo "Starting YARN daemons..."
 #yarn --daemon start resourcemanager
 #yarn --daemon start nodemanager
 
-#echo "✅ Hadoop services started:"
+#echo  "Hadoop services started:"
 jps

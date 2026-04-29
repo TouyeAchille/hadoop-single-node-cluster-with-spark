@@ -3,7 +3,7 @@
 # Base Image Arguments
 # -------------------------------------------------------------
 ARG BASE_IMAGE=ubuntu
-ARG UBUNTU_VERSION=24.10
+ARG UBUNTU_VERSION=latest
 
 FROM ${BASE_IMAGE}:${UBUNTU_VERSION}
 
@@ -12,15 +12,17 @@ FROM ${BASE_IMAGE}:${UBUNTU_VERSION}
 # -------------------------------------------------------------
 LABEL maintainer="Mbogol Touye Achille" \
     email="touyejunior@gmail.com" \
-    version="1.0.0" \
+    version="0.1.0" \
     description="Single-node Hadoop + Spark + Jupyter environment for data processing"
+
 
 # -------------------------------------------------------------
 # Environment Arguments
 # -------------------------------------------------------------
 ARG DEBIAN_FRONTEND=noninteractive
-ARG HADOOP_VERSION=3.4.1
-ARG SPARK_VERSION=3.5.5
+ARG HADOOP_VERSION=3.5.0
+ARG SPARK_VERSION=4.1.1
+
 
 # -------------------------------------------------------------
 # System Dependencies & User
@@ -28,7 +30,7 @@ ARG SPARK_VERSION=3.5.5
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     openssh-server openssh-client \
-    openjdk-11-jdk libbcprov-java \
+    openjdk-17-jdk libbcprov-java \
     wget vim pdsh \
     python3 python3-pip sudo && \
     apt-get clean && \
@@ -36,21 +38,24 @@ RUN apt-get update && \
     
 WORKDIR root/notebooks
 
+
 # -------------------------------------------------------------
-# Hadoop Installation
+# Download Hadoop distribution
 # -------------------------------------------------------------
 RUN wget https://dlcdn.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz && \
     tar -xzf hadoop-${HADOOP_VERSION}.tar.gz && \
     mv hadoop-${HADOOP_VERSION} /usr/local/hadoop && \
     rm hadoop-${HADOOP_VERSION}.tar.gz
 
+
 # -------------------------------------------------------------
-# Spark Installation
+# Download Spark distribution
 # -------------------------------------------------------------
 RUN wget https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop3.tgz && \
     tar -xzf spark-${SPARK_VERSION}-bin-hadoop3.tgz && \
     mv spark-${SPARK_VERSION}-bin-hadoop3 /usr/local/spark && \
     rm spark-${SPARK_VERSION}-bin-hadoop3.tgz
+
 
 # -------------------------------------------------------------
 # Python Packages
@@ -58,12 +63,13 @@ RUN wget https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VER
 RUN pip3 install --no-cache-dir --break-system-packages \
     pyspark jupyter findspark
 
+
 # -------------------------------------------------------------
 # Environment Variables
 # -------------------------------------------------------------
 ENV LANG=C.UTF-8 \
     HOME=/root \
-    JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 \
+    JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 \
     HADOOP_HOME=/usr/local/hadoop \
     SPARK_HOME=/usr/local/spark \
     HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop \
@@ -76,7 +82,7 @@ ENV LANG=C.UTF-8 \
     PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin:/usr/local/spark/bin:/usr/local/spark/sbin    
 
 RUN echo "\
-    alias mapreduce='hadoop jar \$HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-${HADOOP_VERSION}.jar'\n\
+    alias hadoop-submit='hadoop jar \$HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-${HADOOP_VERSION}.jar'\n\
     export JAVA_HOME=${JAVA_HOME}\n\
     export HADOOP_HOME=${HADOOP_HOME}\n\
     export SPARK_HOME=${SPARK_HOME}\n\

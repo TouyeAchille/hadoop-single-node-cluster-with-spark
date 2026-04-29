@@ -13,16 +13,16 @@ services:
       - HADOOP_HOME=/usr/local/hadoop
       - SPARK_HOME=/usr/local/spark
       - JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-      - HADOOP_CONF_DIR=${HADOOP_HOME}/hadoop/etc/hadoop
-      - PATH=${HADOOP_HOME}/hadoop/bin:${HADOOP_HOME}/hadoop/sbin:${SPARK_HOME}/spark/bin:${SPARK_HOME}/spark/sbin:$PATH
-      - HADOOP_MAPRED_HOME=$HADOOP_HOME 
-      - HADOOP_COMMON_HOME=$HADOOP_HOME 
-      - HADOOP_HDFS_HOME=$HADOOP_HOME
-      - HADOOP_YARN_HOME=$HADOOP_HOME 
-      - HADOOP_TOOLS_HOME=$HADOOP_HOME 
-      - HADOOP_COMMON_LIB_NATIVE_DIR=${HADOOP_HOME}/hadoop/lib/native
-    container_name: hadoop-single-node
-    hostname: hadoop-single-node
+      - HADOOP_CONF_DIR=/usr/local/hadoop/hadoop/etc/hadoop
+      - PATH=/usr/local/hadoop/hadoop/bin:/usr/local/hadoop/hadoop/sbin:/usr/local/spark/bin:/usr/local/spark/sbin:$PATH
+      - HADOOP_MAPRED_HOME=/usr/local/hadoop 
+      - HADOOP_COMMON_HOME=/usr/local/hadoop
+      - HADOOP_HDFS_HOME=/usr/local/hadoop
+      - HADOOP_YARN_HOME=/usr/local/hadoop
+      - HADOOP_TOOLS_HOME=/usr/local/hadoop
+      - HADOOP_COMMON_LIB_NATIVE_DIR=/usr/local/hadoop/hadoop/lib/native
+    container_name: single-node-hadoop-spark
+    hostname: single-node-hadoop-spark
     stdin_open: true
     tty: true
     ulimits:
