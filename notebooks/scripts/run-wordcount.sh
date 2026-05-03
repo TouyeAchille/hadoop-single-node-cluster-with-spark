@@ -4,6 +4,7 @@
 
 # create input files 
 mkdir input
+
 echo "Hello Docker" >input/file2.txt
 echo "Hello Hadoop" >input/file1.txt
 
@@ -14,7 +15,7 @@ hdfs dfs -mkdir -p input
 hdfs dfs -put ./input/* input
 
 # run wordcount 
-hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/sources/hadoop-mapreduce-examples-3.4.1-sources.jar org.apache.hadoop.examples.WordCount input output
+hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/sources/hadoop-mapreduce-examples-3.5.0-sources.jar org.apache.hadoop.examples.WordCount input output
 
 # print the input files
 echo -e "\ninput file1.txt:"
